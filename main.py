@@ -8,6 +8,7 @@ from registrators.cancel_command_registrator import register_cancel_command
 from registrators.create_story_registrator import register_create_story
 from registrators.get_story_registrator import register_get_story
 from registrators.send_story_registrator import register_send_story
+from registrators.delete_story_registrator import register_delete_story
 
 bot = Bot("1929642997:AAENEi8tjasTw6PzcuKhVp7i1FwdE_R6xMw", parse_mode='html')
 dp = Dispatcher(bot, storage=MemoryStorage())
@@ -27,6 +28,8 @@ async def main():
     register_create_story(dp)
     register_get_story(dp)
     register_cancel_command(dp)
+    register_delete_story(dp)
+
 
     await dp.start_polling()
 

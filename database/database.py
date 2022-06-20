@@ -14,7 +14,6 @@ class Database:
         send_count INTEGER);""")
         self.connection.commit()
 
-
     def insert(self, title, file, send_count=0):
         self.cursor.execute("""
         INSERT INTO stories(title, file, send_count)
@@ -24,6 +23,10 @@ class Database:
     def find(self, title) -> tuple:
         self.cursor.execute("SELECT * FROM stories WHERE title=?", (title,))
         return self.cursor.fetchone()
+
+    def find_all(self) -> [tuple]:
+        self.cursor.execute("SELECT * FROM stories")
+        return self.cursor.fetchall()
 
     def update(self, title, field, value):
         self.cursor.execute(f"UPDATE stories SET {field}=? WHERE title=?", (value, title,))

@@ -1,12 +1,10 @@
+from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
-from aiogram.dispatcher import FSMContext
-
-from states.create_story_states import CreateStates
-from keyboards.create_story_keyboard import *
-
 from database.models.story import Story
-from database.database import Database
+from keyboards.create_story_keyboard import *
+from states.create_story_states import CreateStates
+
 
 async def create_story_title(m: Message):
     await m.reply("Bыберите файл с историей.", reply_markup=select_file_keyboard())
@@ -30,6 +28,11 @@ async def create_story_end(m: Message, state: FSMContext):
     file = user_data['file']
     title = user_data['title']
 
+    print(file, title)
+
     new_story = Story(title, file)
     new_story.save()
 
+    await m.answer(f"История '{title}' успешно создана!")
+
+    await state.finish()
